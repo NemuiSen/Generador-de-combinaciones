@@ -3,13 +3,13 @@
 
 #include <math.h> //pow
 #include <iostream> //imprimer mensajes
-#include <vector> //es mejor que los punteros uwu
+#include <vector> //es mejor que los punteros
 using namespace std;
 
-namespace owo
+namespace nemui
 {    
     template<typename T, size_t n>
-    void comb_posib_nR_s (T (&elementos)[n]) //combinaciones posibles estaticas sin retorno
+    void comb_posib_nr_s (T (&elementos)[n]) //combinaciones posibles estaticas sin retorno
     {
         cout << "total: " << pow(n, 4) << endl; //el total
         int it = 0; //iteracion
@@ -29,7 +29,7 @@ namespace owo
     }
 
     template <typename t>
-    vector<vector<t>> comb_posib_s (vector<t> ele) //combinacon posible estatico con retorno
+    vector<vector<t>> comb_posib_s (vector<t> ele) //combinaciones posibles estaticas con retorno
     {
         int it = 0; //iterador
         vector<vector<t>> out; //variable de salida
@@ -51,11 +51,12 @@ namespace owo
     }
 
     template<typename t>
-    vector<vector<t>> comb_posib (vector<t> ele, int cant) // cominaciones posibles con no estatico
+    vector<vector<t>> comb_posib (vector<t> ele, int cant) // cominaciones posibles no estaticas
     {
-        vector<vector<t>> out; //valor de salida
-        out.resize(pow(ele.size(), cant)); //establecer como tamaño el total de elementos
-        if (cant <= 1) //si es el ultimo elemento o solo 1, guarda todos los elementos dentro de un vector personal
+		vector<vector<t>> out; //valor de salida
+		out.resize(pow(ele.size(), cant)); //establecer como tamaño el total de elementos (numero de elementos ^ la cantidad de elementos)
+        
+		if (cant <= 1) //si la cantidad es menor o igual a uno retorna los elementos separados en vectores distintos
         {
             for (int i = 0; i < out.size(); i++)
             {
@@ -64,7 +65,8 @@ namespace owo
         }
         else //de lo contrario
         {
-            int it_t = 0, // iteracion del elemento temporal
+
+			int it_t = 0, // iteracion del elemento temporal
                 it_e = 0; // iteracion del los elementos dados
             vector<vector<t>> temp = comb_posib(ele, cant - 1); //elemento temporal
             for (int i = 0; i < out.size(); i++)
@@ -74,12 +76,14 @@ namespace owo
                 {
                     out.at(i).push_back(temp.at(it_t).at(j)); //poner el o los siguientes elementos
                 }
-                it_t++; // el iterator del temporal ahumentr
-                if (it_t >= temp.size()) {it_t = 0; it_e++;} //si el iterador temporal es mayor al tamaño del temporal el it = 0 y el it del elemento ahumenta
+                it_t++; // el iterator del temporal ahumenta
+                if (it_t >= temp.size()) { it_t = 0; it_e++; } //si el iterador temporal es mayor al tamaño del temporal el it = 0 y el it del elemento ahumenta
                 if (it_e >= ele.size())  it_e = 0; // si el it del elemento es mayor a el it = 0
+        		
             }
         }
-        return out; //retorna el valor de salida
+
+		return out; //retorna el valor de salida
     }
 } // namespace owo
 
