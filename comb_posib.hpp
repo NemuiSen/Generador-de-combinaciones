@@ -9,21 +9,14 @@ namespace nemui
 	template <typename t>
 	std::vector<std::vector<t>> comb_posib(std::vector<t> ele, uint32_t cant)
 	{
-		std::vector<std::vector<t>> out;
+		//numero el total de elementos
+		//(numero de elementos presentes ^ la cantidad de elementos que queremos)
+		std::vector<std::vector<t>> out(pow(ele.size(), cant));
 
-		if (cant <= 1)
-		{
-			out.resize(ele.size());
-			for (int i = 0; i < out.size(); i++)
-				out.at(i).push_back(ele.at(i));
-			return out;
-		}
+		if (cant <= 1) for (int i = 0; i < out.size(); i++)
+			out.at(i).push_back(ele.at(i));
 		else
 		{
-			//numero el total de elementos
-			//(numero de elementos presentes ^ la cantidad de elementos que queremos)
-			out.resize(pow(ele.size(), cant));
-
 			std::vector<std::vector<t>> last = comb_posib(ele, cant - 1);
 			int it_e = 0;
 			int it_l = 0;
@@ -36,8 +29,9 @@ namespace nemui
 				out.at(i).insert(out.at(i).end(), last.at(it_l).begin(), last.at(it_l).end());
 				out.at(i).push_back(ele.at(it_e));
 			}
-			return out;
 		}
+
+		return out;
 	}
 } // namespace nemui
 
